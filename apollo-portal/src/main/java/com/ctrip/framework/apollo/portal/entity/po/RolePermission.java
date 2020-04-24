@@ -13,14 +13,14 @@ import javax.persistence.Table;
  * @author Jason Song(song_s@ctrip.com)
  */
 @Entity
-@Table(name = "RolePermission")
-@SQLDelete(sql = "Update RolePermission set isDeleted = 1 where id = ?")
-@Where(clause = "isDeleted = 0")
+@Table(name = "role_permission")
+@SQLDelete(sql = "Update role_permission set is_deleted = '1' where id = ?")
+@Where(clause = "is_deleted = '0'")
 public class RolePermission extends BaseEntity {
-  @Column(name = "RoleId", nullable = false)
+  @Column(name = "role_id", nullable = false)
   private long roleId;
 
-  @Column(name = "PermissionId", nullable = false)
+  @Column(name = "permission_id", nullable = false)
   private long permissionId;
 
   public long getRoleId() {

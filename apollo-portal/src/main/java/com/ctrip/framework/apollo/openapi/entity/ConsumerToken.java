@@ -15,17 +15,17 @@ import javax.persistence.Table;
  * @author Jason Song(song_s@ctrip.com)
  */
 @Entity
-@Table(name = "ConsumerToken")
-@SQLDelete(sql = "Update ConsumerToken set isDeleted = 1 where id = ?")
-@Where(clause = "isDeleted = 0")
+@Table(name = "consumer_token")
+@SQLDelete(sql = "Update consumer_token set is_deleted = '1' where id = ?")
+@Where(clause = "is_deleted = '0'")
 public class ConsumerToken extends BaseEntity {
-  @Column(name = "ConsumerId", nullable = false)
+  @Column(name = "consumer_id", nullable = false)
   private long consumerId;
 
   @Column(name = "token", nullable = false)
   private String token;
 
-  @Column(name = "Expires", nullable = false)
+  @Column(name = "expires", nullable = false)
   private Date expires;
 
   public long getConsumerId() {

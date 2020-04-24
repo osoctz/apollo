@@ -14,33 +14,33 @@ import javax.persistence.Table;
  * @author Jason Song(song_s@ctrip.com)
  */
 @Entity
-@Table(name = "Release")
-@SQLDelete(sql = "Update Release set isDeleted = 1 where id = ?")
-@Where(clause = "isDeleted = 0")
+@Table(name = "release")
+@SQLDelete(sql = "Update release set is_deleted = '1' where id = ?")
+@Where(clause = "is_deleted = '0'")
 public class Release extends BaseEntity {
-  @Column(name = "ReleaseKey", nullable = false)
+  @Column(name = "release_key", nullable = false)
   private String releaseKey;
 
-  @Column(name = "Name", nullable = false)
+  @Column(name = "name", nullable = false)
   private String name;
 
-  @Column(name = "AppId", nullable = false)
+  @Column(name = "app_id", nullable = false)
   private String appId;
 
-  @Column(name = "ClusterName", nullable = false)
+  @Column(name = "cluster_name", nullable = false)
   private String clusterName;
 
-  @Column(name = "NamespaceName", nullable = false)
+  @Column(name = "namespace_name", nullable = false)
   private String namespaceName;
 
-  @Column(name = "Configurations", nullable = false)
+  @Column(name = "configurations", nullable = false)
   @Lob
   private String configurations;
 
-  @Column(name = "Comment", nullable = false)
+  @Column(name = "comment", nullable = false)
   private String comment;
 
-  @Column(name = "IsAbandoned", columnDefinition = "Bit default '0'")
+  @Column(name = "is_abandoned", columnDefinition = "Bit default '0'")
   private boolean isAbandoned;
 
   public String getReleaseKey() {

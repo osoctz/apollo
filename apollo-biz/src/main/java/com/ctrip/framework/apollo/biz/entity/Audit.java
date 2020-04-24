@@ -10,25 +10,25 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Audit")
-@SQLDelete(sql = "Update Audit set isDeleted = 1 where id = ?")
-@Where(clause = "isDeleted = 0")
+@Table(name = "audit")
+@SQLDelete(sql = "Update audit set is_deleted = '1' where id = ?")
+@Where(clause = "is_deleted = '0'")
 public class Audit extends BaseEntity {
 
   public enum OP {
     INSERT, UPDATE, DELETE
   }
 
-  @Column(name = "EntityName", nullable = false)
+  @Column(name = "entity_name", nullable = false)
   private String entityName;
 
-  @Column(name = "EntityId")
+  @Column(name = "entity_id")
   private Long entityId;
 
-  @Column(name = "OpName", nullable = false)
+  @Column(name = "op_name", nullable = false)
   private String opName;
 
-  @Column(name = "Comment")
+  @Column(name = "comment")
   private String comment;
 
   public String getComment() {

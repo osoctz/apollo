@@ -9,18 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "AccessKey")
-@SQLDelete(sql = "Update AccessKey set isDeleted = 1 where id = ?")
-@Where(clause = "isDeleted = 0")
+@Table(name = "access_key")
+@SQLDelete(sql = "Update access_key set is_deleted = '1' where id = ?")
+@Where(clause = "is_deleted = '0'")
 public class AccessKey extends BaseEntity {
 
-  @Column(name = "appId", nullable = false)
+  @Column(name = "app_id", nullable = false)
   private String appId;
 
-  @Column(name = "Secret", nullable = false)
+  @Column(name = "secret", nullable = false)
   private String secret;
 
-  @Column(name = "isEnabled", columnDefinition = "Bit default '0'")
+  @Column(name = "is_enabled", columnDefinition = "Bit default '0'")
   private boolean enabled;
 
   public String getAppId() {

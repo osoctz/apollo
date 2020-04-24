@@ -10,18 +10,18 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Privilege")
-@SQLDelete(sql = "Update Privilege set isDeleted = 1 where id = ?")
-@Where(clause = "isDeleted = 0")
+@Table(name = "privilege")
+@SQLDelete(sql = "Update privilege set is_deleted = '1' where id = ?")
+@Where(clause = "is_deleted = '0'")
 public class Privilege extends BaseEntity {
 
-  @Column(name = "Name", nullable = false)
+  @Column(name = "name", nullable = false)
   private String name;
 
-  @Column(name = "PrivilType", nullable = false)
+  @Column(name = "privil_type", nullable = false)
   private String privilType;
 
-  @Column(name = "NamespaceId")
+  @Column(name = "namespace_id")
   private long namespaceId;
 
   public String getName() {

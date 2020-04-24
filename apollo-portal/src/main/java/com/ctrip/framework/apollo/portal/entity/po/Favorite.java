@@ -10,18 +10,18 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Favorite")
-@SQLDelete(sql = "Update Favorite set isDeleted = 1 where id = ?")
-@Where(clause = "isDeleted = 0")
+@Table(name = "favorite")
+@SQLDelete(sql = "Update favorite set is_deleted = '1' where id = ?")
+@Where(clause = "is_deleted = '0'")
 public class Favorite extends BaseEntity {
 
-  @Column(name = "AppId", nullable = false)
+  @Column(name = "app_id", nullable = false)
   private String appId;
 
-  @Column(name = "UserId", nullable = false)
+  @Column(name = "user_id", nullable = false)
   private String userId;
 
-  @Column(name = "Position")
+  @Column(name = "position")
   private long position;
 
   public String getAppId() {
