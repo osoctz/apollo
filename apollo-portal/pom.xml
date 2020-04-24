@@ -68,12 +68,69 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<!--打包jar-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<!--MANIFEST.MF 中 Class-Path 加入前缀-->
+							<classpathPrefix>/var/libs/</classpathPrefix>
+							<classpathLayoutType>repository</classpathLayoutType>
+							<!--jar包不包含唯一版本标识-->
+							<useUniqueVersions>false</useUniqueVersions>
+							<!--指定入口类-->
+							<mainClass>com.ctrip.framework.apollo.portal.PortalApplication</mainClass>
+						</manifest>
+					</archive>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+				</configuration>
+			</plugin>
+			<!--拷贝依赖 copy-dependencies-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/repo/
+							</outputDirectory>
+							<useRepositoryLayout>true</useRepositoryLayout>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot.version}</version>
 				<configuration>
-					<executable>true</executable>
+					<!--重写包含依赖，包含不存在的依赖，jar里没有pom里的依赖-->
+					<includes>
+						<include>
+							<groupId>null</groupId>
+							<artifactId>null</artifactId>
+						</include>
+					</includes>
+					<layout>ZIP</layout>
+					<!--使用外部配置文件，jar包里没有资源文件-->
+					<outputDirectory>${project.build.directory}</outputDirectory>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.spotify</groupId>
@@ -110,50 +167,14 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.google.code.maven-replacer-plugin</groupId>
-				<artifactId>replacer</artifactId>
-				<version>1.5.3</version>
-				<executions>
-					<execution>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>replace</goal>
-						</goals>
-					</execution>
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<basedir>${project.build.directory}</basedir>
-					<includes>
-						<include>classes/static/*.html</include>
-						<include>classes/static/**/*.html</include>
-					</includes>
-					<replacements>
-						<replacement>
-							<token>\.css\"</token>
-							<value>.css?v=${maven.build.timestamp}\"</value>
-						</replacement>
-						<replacement>
-							<token>\.js\"</token>
-							<value>.js?v=${maven.build.timestamp}\"</value>
-						</replacement>
-					</replacements>
+					<source>8</source>
+					<target>8</target>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-		<profile>
-			<id>ctrip</id>
-			<dependencies>
-				<dependency>
-					<groupId>com.ctrip.framework.apollo-sso</groupId>
-					<artifactId>apollo-sso-ctrip</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>com.ctrip.framework.apollo-ctrip-service</groupId>
-					<artifactId>apollo-email-service</artifactId>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
+
 </project>
